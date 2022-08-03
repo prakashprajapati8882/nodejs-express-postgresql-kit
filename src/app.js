@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 const { loadRoutesAndMiddleware } = require("./utilities/server-utill");
@@ -10,6 +12,8 @@ const app = express();
 app.use(require("./middlewares/api-logger.middleware"));
 app.use(require("./middlewares/response-handler.middleware"));
 
+app.use(fileUpload());
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());

@@ -1,4 +1,4 @@
-# nodejs-express-postgresql-kit
+# NodeJs Express PostgreSql Startup Kit
 
 ### Configuration
 
