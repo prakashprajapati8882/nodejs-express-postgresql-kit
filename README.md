@@ -22,7 +22,10 @@ After checkout of a repository, please perform the following steps in exact sequ
 
     Remember to fill up required values in `.env`
 
-2. Run `npm i`
+2. Install packages Dependencies
+    ```cmd
+    npm i
+    ```
 
 3. Run server start command 
     ```cmd

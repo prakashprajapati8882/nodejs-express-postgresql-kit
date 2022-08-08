@@ -3,6 +3,7 @@
 const path = require("path");
 const Umzug = require("umzug");
 const Sequelize = require("sequelize");
+const umzug = require("umzug");
 
 const getSequalizeIns = async () => {
     const pool = {
@@ -35,6 +36,11 @@ const runMigrationsAndSeeders = async () => {
         if (migrationRes !== undefined || migrationRes !== null) {
             console.log(`Migrations was running at ${new Date()}`);
             console.log(`Migrations output : ${migrationRes || "successfully executed"}`);
+        }
+        const seedersRes = await runSeeders();
+        if (seedersRes !== undefined || seedersRes !== null) {
+            console.log(`Seeders was running at ${new Date()}`);
+            console.log(`Seeders output : ${seedersRes || "successfully executed"}`);
         }
     } catch (err) {
         console.log(">nodejs-boilerplate | [run-migration-seeders.js] > #39 | err : ", err);
@@ -72,7 +78,7 @@ const runMigrations = async function () {
 const runSeeders = async function () {
     try {
         const sequelize = await getSequalizeIns();
-        const seedersConfig = new ({
+        const seedersConfig = new umzug({
             migrations: {
                 path: path.join(__dirname, "../seeders/"),
                 params: [
@@ -87,7 +93,7 @@ const runSeeders = async function () {
                 sequelize: sequelize,
                 modelName: "system_seeds"
             }
-        })();
+        });
         await seedersConfig.up();
         console.log(" seeders completed ");
     } catch (error) {
