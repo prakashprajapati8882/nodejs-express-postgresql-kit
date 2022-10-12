@@ -1,10 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const fileUpload = require("express-fileupload");
-const cookieParser = require("cookie-parser");
+const path = require("path");
 const bodyParser = require("body-parser");
 const compression = require("compression");
-const { loadRoutesAndMiddleware } = require("./utilities/server-utill");
+const fileUpload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
+const swaggerAPIDoc = require("./swagger");
 
 const app = express();
 
@@ -28,13 +29,15 @@ app.use(cors({
     exposedHeaders: ["Content-Disposition", "FileLength"]
 }));
 
-loadRoutesAndMiddleware(app);
+// Loadding Swagger API Doc
+swaggerAPIDoc(app);
 
-app.use("/api/v1", require("./middlewares/error-response-handler.middleware"));
-app.use("/api/v1", require("./middlewares/error-handler.middleware"));
+app.use("/", express.static(path.join(__dirname, "../client")));
+app.use("/", express.static(path.join(process.cwd(), "client")));
 
-app.get("/", (req, res) => {
-    res.status(200).send("<h1>NodeJs PostgreSQL Boilerplate</h1>");
+app.get(["index.html", "/*"], (req, res) => {
+    const indexFilePath = process.env.INDEX_FILE_PATH || path.join(__dirname, "../client/build/index.html");
+    res.sendFile(indexFilePath);
 });
 
 module.exports = app;

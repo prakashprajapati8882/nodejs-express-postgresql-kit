@@ -1,0 +1,21 @@
+module.exports = {
+    INVALID_EMAIL_OR_PASSWORD: "Incorrect email or password",
+    EMAIL_PASSWORD_NOT_FOUND: "Invalid username or password.",
+    USER_NOT_FOUND: "User not found.",
+    USER_NOT_ACTIVE: "User is not activated.",
+    USER_EXIST: "User already exists.",
+    USER_REGISTERED: "User registered successfully.",
+    TOKEN_EXPIRED: "Token Expired",
+    FORMAT_AUTHORIZATION_BEARER: "Format is authorization.",
+    NO_AUTHORIZATION_HEADER: "Auth token not found in the request. Log in to authenticate.",
+    INVALID_PASSWORD: "Invalid password.",
+    SESSION_EXPIRED: "Your session has expired. Please login again.",
+    INVALID_PASSWORD_ITERATION: "Login failed",
+    EMAIL_NOT_FOUND: "Email not found.",
+    INVALID_EMAIL: "Please provide a valid email.",
+    PASSWORD_NOT_FOUND: "Password not found.",
+    FIRST_NAME_NOT_FOUND: "First name not found.",
+    PLEASE_CHECK_FIRST_NAME_LENGTH: "Please check first name length.",
+    LAST_NAME_NOT_FOUND: "Last name not found.",
+    PLEASE_CHECK_LAST_NAME_LENGTH: "Please check last name length."
+};

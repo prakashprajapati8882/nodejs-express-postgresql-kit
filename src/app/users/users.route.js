@@ -1,7 +1,10 @@
 const users = require("./users.controller");
+const isAuthenticated = require("../../middlewares/verify-user-token.middleware");
+const { validateUserSaveOrUpdate } = require("./users.request");
+const { handleResponse } = require("../../utilities/common-utils");
 
 module.exports = (router) => {
-    router.post("/api/v1/create-users", (_req, _res, _next) => users.createUser(_req).then(_res.success).catch(_next));
-    router.get("/api/v1/get-user-info", (_req, _res, _next) => users.getUserInfoByEmail(_req).then(_res.success).catch(_next));
-    router.get("/api/v1/get-all-users", (_req, _res, _next) => users.getAllUsers(_req).then(_res.success).catch(_next));
+    router.post("/api/v1/user/create", isAuthenticated, validateUserSaveOrUpdate, handleResponse.bind(this, users.createUser));
+    router.get("/api/v1/user/list", isAuthenticated, handleResponse.bind(this, users.getUserInfoByEmail));
+    router.get("/api/v1/users/list", isAuthenticated, handleResponse.bind(this, users.getAllUsers));
 };

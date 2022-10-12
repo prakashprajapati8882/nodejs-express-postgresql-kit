@@ -22,26 +22,20 @@ const Assert = {
     },
 
     // eslint-disable-next-line default-param-last
-    throwError(_error = BaseError, reject) {
-        if (typeof _error === "function") {
-            if (reject) {
-                reject(new _error());
-            } else {
-                throw new _error();
-            }
-        } else if (reject) {
-            reject(_error);
+    throwError(statusCode, message, reject) {
+        if (reject) {
+            return reject(message);
         } else {
-            throw _error;
+            throw new BaseError(statusCode, message);
         }
     },
 
-    throwIf(_cond, _error = BaseError, reject = null) {
-        return Assert.isTruthy(_cond) && Assert.throwError(_error, reject);
+    throwIf(_cond, statusCode, message, reject = null) {
+        return Assert.isTruthy(_cond) && Assert.throwError(statusCode, message, reject);
     },
 
-    throwIfNot(_cond, _error = BaseError, reject = null) {
-        return !Assert.isTruthy(_cond) && Assert.throwError(_error, reject);
+    throwIfNot(_cond, statusCode, message, reject = null) {
+        return !Assert.isTruthy(_cond) && Assert.throwError(statusCode, message, reject);
     }
 };
 

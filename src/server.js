@@ -5,16 +5,23 @@ const path = require("path");
 const { generateSelfSignedSSL, getSSLConfig } = require("./ssl/ssl.service");
 const { createDatabaseConnection } = require("./database/database-connection.service");
 const { runMigrationsAndSeeders } = require("./database/services/run-migration-seeders");
+const { loadRoutesAndMiddleware } = require("./utilities/server-utill");
 
 const { HTTPS_PORT, HTTP_PORT } = process.env;
 
 const startServer = async (app) => {
+    // Execute migrations and seeders for database
     await runMigrationsAndSeeders();
+    
+    // Create PostgreSQL database connection
     await createDatabaseConnection();
+
+    // load routes and controllers files
+    await loadRoutesAndMiddleware(app);
+
     if (!fs.existsSync(path.join(__dirname, "ssl/keys/localhost.key"))) {
         await generateSelfSignedSSL();
     }
-
     const sslConfig = getSSLConfig();
     const secureServer = createHttpsServer(app, sslConfig);
     secureServer.listen(HTTPS_PORT, function () {

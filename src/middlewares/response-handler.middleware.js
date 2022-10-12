@@ -12,11 +12,16 @@ module.exports = (_req, _res, _next) => {
 
     // this can we used for send error or bad request
     _res.error = async (_error) => {
-        const errors = (_error.errors || []).map((error) => ({
-            message: error.message,
-            type: error.type,
-            path: error.path,
-            value: error.value
+        if (process.env.NODE_ENV === "porduction") {
+            logger.error(_error);
+        } else {
+            logger.info(_error);
+        }
+        const errors = (_error.errors || []).map((err) => ({
+            message: err.message,
+            type: err.type,
+            path: err.path,
+            value: err.value
         }));
         const message = _error.message || baseError.message;
         const error = {
@@ -25,7 +30,6 @@ module.exports = (_req, _res, _next) => {
             code: _error.code || baseError.code,
             return_code: _error.returnCode || baseError.returnCode
         };
-        logger.error(error);
         return _res.status(_error.statusCode || 400).json(error).end();
     };
 

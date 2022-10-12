@@ -30,6 +30,12 @@ module.exports = {
                 password: {
                     type: Sequelize.STRING
                 },
+                status: {
+                    type: Sequelize.BOOLEAN
+                },
+                salt: {
+                    type: Sequelize.STRING
+                },
                 profilePic: {
                     type: Sequelize.STRING,
                     field: "profile_pic"

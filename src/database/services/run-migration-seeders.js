@@ -3,7 +3,6 @@
 const path = require("path");
 const Umzug = require("umzug");
 const Sequelize = require("sequelize");
-const umzug = require("umzug");
 
 const getSequalizeIns = async () => {
     const pool = {
@@ -78,7 +77,7 @@ const runMigrations = async function () {
 const runSeeders = async function () {
     try {
         const sequelize = await getSequalizeIns();
-        const seedersConfig = new umzug({
+        const seedersConfig = new Umzug({
             migrations: {
                 path: path.join(__dirname, "../seeders/"),
                 params: [
